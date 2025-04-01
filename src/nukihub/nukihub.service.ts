@@ -17,14 +17,14 @@ export async function rebotNukihub() {
         const page = await browser.newPage();
         console.log("Abriendo pagina de nukihub en configuracion de mqtt");        
         await page.goto(`${process.env.HOST}${process.env.PAGE}` ?? (() => { throw new Error('Host/Page no definido en las variables de entorno'); })());
-        const reference = 'input[name="submit"]'
+        const reference = 'a[href^="/get?page=reboot"]'
         console.log("Esperando que aparezca el boton de guardar...")
         await page.waitForSelector(reference);
         const boton = await page.$(reference);
         if (!boton) {
             throw new Error('No se encontro el botón en reference: ' + reference);
         }
-        console.log("Haciendo click en el boton de guardar...")
+        console.log("Haciendo click en el boton de reiniciar...")
         await boton.click()
 
         console.log("Esperando que el nukihub se reinicie...")
